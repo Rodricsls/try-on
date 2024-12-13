@@ -5,13 +5,19 @@ import { bootstrapCameraKit } from "@snap/camera-kit";
     apiToken:
       "eyJhbGciOiJIUzI1NiIsImtpZCI6IkNhbnZhc1MyU0hNQUNQcm9kIiwidHlwIjoiSldUIn0.eyJhdWQiOiJjYW52YXMtY2FudmFzYXBpIiwiaXNzIjoiY2FudmFzLXMyc3Rva2VuIiwibmJmIjoxNzM0MDU5Nzc3LCJzdWIiOiJlNjIzMWU2Ni1lYjhhLTQxNGUtYjBlYy01MDFjNmE4ZDVjZTh-U1RBR0lOR340YmQwM2NmMi01NGVlLTQ1YmQtODUyYi05YjcxYTk1MDM2NjIifQ.GNZfZUIBF-wh_5YByeVKK0hcED0UsBxZlapv6W8gi_A",
   });
+
   const liveRenderTarget = document.getElementById(
     "canvas",
   ) as HTMLCanvasElement;
   const session = await cameraKit.createSession({ liveRenderTarget });
+
+  // Request the back camera
   const mediaStream = await navigator.mediaDevices.getUserMedia({
-    video: true,
+    video: {
+      facingMode: { exact: "environment" }, // Request back camera
+    },
   });
+
   await session.setSource(mediaStream);
   await session.play();
 
